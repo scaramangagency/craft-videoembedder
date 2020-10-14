@@ -52,10 +52,12 @@ class VideoEmbedderService extends Component
 		}
 		
 		if ($this->isVimeo($url) && $this->isOembed($url)) {
-			$data = json_decode($response->response->getContent());
-			$data->aspectRatio = $data->width / $data->height;
-			$data->code = $data->html;
-			return $data;
+            $data = json_decode($response->response->getContent());
+            if ($data) {
+                $data->aspectRatio = $data->width / $data->height;
+                $data->code = $data->html;
+                return $data;
+            }
 		}
 
 		return $response;
