@@ -255,7 +255,7 @@ class VideoEmbedderService extends Component
         try {
 
             // looks like there are, now let's only do this for YouTube and Vimeo
-            if($this->getInfo($url)->type == 'video' && ($this->isYouTube($url) || $this->isVimeo($url)))
+            if($this->isYouTube($url) || $this->isVimeo($url))
             {
                 $parameters = '';
     
