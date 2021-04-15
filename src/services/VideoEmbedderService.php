@@ -41,11 +41,10 @@ class VideoEmbedderService extends Component
 		}
 		
 		try {
-			$response = Embed::create($url, [
-				'choose_bigger_image' => true,
-				'parameters' => [],
-			]);
-		} 
+			$embed = new Embed();
+            $info = $embed->get($url);
+            $response = $info->getOEmbed();
+        } 
 		catch (Exception $e) 
 		{
 			$response = null;
@@ -251,11 +250,10 @@ class VideoEmbedderService extends Component
      */
     public function getEmbedUrl($url, $params = [] )
     {
-
         try {
 
             // looks like there are, now let's only do this for YouTube and Vimeo
-            if($this->getInfo($url)->type == 'video' && $this->isYouTube($url) || $this->isVimeo($url))
+            if($this->getInfo($url)->get('type') == 'video' && $this->isYouTube($url) || $this->isVimeo($url))
             {
                 $parameters = '';
     
