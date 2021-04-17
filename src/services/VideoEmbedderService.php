@@ -148,7 +148,7 @@ class VideoEmbedderService extends Component
     public function embed( $url, $params = [] ) : string
     {
         try {
-            $code = $this->getInfo($url)->code;
+            $code = $this->getInfo($url)->get('code');
 
             // check if theree are any parameters passed along
             if (!empty($params)) {
@@ -340,7 +340,7 @@ class VideoEmbedderService extends Component
         else
         {
             // not vimeo, use Embed
-            $image = $this->cleanUrl($this->getInfo($url)->image);
+            $image = $this->cleanUrl($this->getInfo($url)->get('image'));
             
             // Check if anything exists
             if (!empty($image)) {
