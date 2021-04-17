@@ -61,7 +61,7 @@ class VideoEmbedderService extends Component
      */
     public function isVideo($url)
     {
-        return ($this->getInfo($url)->type == 'video');
+        return ($this->getInfo($url)->get('type') == 'video');
     }
 
     /**
@@ -154,7 +154,7 @@ class VideoEmbedderService extends Component
             if (!empty($params)) {
 
                 // looks like there are, now let's only do this for YouTube and Vimeo
-                if($this->getInfo($url)->type == 'video' && ($this->isYouTube($url) || $this->isVimeo($url)))
+                if($this->getInfo($url)->get('type') == 'video' && ($this->isYouTube($url) || $this->isVimeo($url)))
                 {
 
                     // for videos add autoplay check if the embed gets the code
@@ -299,7 +299,7 @@ class VideoEmbedderService extends Component
     public function getVideoId($url)
     {
         // looks like there are, now let's only do this for YouTube and Vimeo
-        if($this->getInfo($url)->type == 'video' && ($this->isYouTube($url) || $this->isVimeo($url)))
+        if($this->getInfo($url)->get('type') && ($this->isYouTube($url) || $this->isVimeo($url)))
         {
             if ($this->isYouTube($url))
             {
@@ -326,7 +326,7 @@ class VideoEmbedderService extends Component
     **/
     public function getVideoThumbnail($url) {
         // check for vimeo, I don't like the way Embed returns the Vimeo thumbnail
-        if($this->getInfo($url)->type == 'video' && $this->isVimeo($url))
+        if($this->getInfo($url)->get('type') && $this->isVimeo($url))
         {
             $id = $this->getVimeoId($url);
             
