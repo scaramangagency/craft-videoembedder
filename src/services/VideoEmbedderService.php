@@ -43,12 +43,7 @@ class VideoEmbedderService extends Component
 		try {
 			$embed = new Embed();
             $info = $embed->get($url);
-
-            if ($this->isVimeo($url)) {
-                $response = $info;
-            } else {
-                $response = $info->getOEmbed();
-            }
+            $response = $info->getOEmbed();
         } 
 		catch (Exception $e) 
 		{
