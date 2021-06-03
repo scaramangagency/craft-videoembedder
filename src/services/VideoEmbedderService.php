@@ -43,7 +43,12 @@ class VideoEmbedderService extends Component
 		try {
 			$embed = new Embed();
             $info = $embed->get($url);
-            $response = $info->getOEmbed();
+
+            if ($this->isVimeo($url)) {
+                $response = $info;
+            } else {
+                $response = $info->getOEmbed();
+            }
         } 
 		catch (Exception $e) 
 		{
@@ -325,12 +330,18 @@ class VideoEmbedderService extends Component
      * 
     **/
     public function getVideoThumbnail($url) {
+        //return $this->getInfo($url)->getOEmbed()->all();
         // check for vimeo, I don't like the way Embed returns the Vimeo thumbnail
-        if($this->getInfo($url)->get('type') && $this->isVimeo($url))
+        if($this->isVimeo($url))
         {
             $id = $this->getVimeoId($url);
             
-            $data = file_get_contents("http://vimeo.com/api/v2/video/$id.json");
+            $data = @file_get_contents("https://vimeo.com/api/v2/video/$id.json");
+            
+            if ($data === FALSE) { 
+                return '';
+            }
+
             $data = json_decode($data);
             
             $image = $this->cleanUrl($data[0]->thumbnail_large);
